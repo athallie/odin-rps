@@ -1,5 +1,6 @@
 let humanScore = 0
 let computerScore = 0
+let gameIsDone = false
 
 let buttonsContainer = document.querySelector("#buttons-container")
 let resultsContainer = document.querySelector("#results-container")
@@ -8,6 +9,13 @@ let scoresText = document.querySelectorAll(".score")
 buttonsContainer.addEventListener("click", (e) => {
     let element = e.target
     if (element.classList.contains('choice')) {
+        if (gameIsDone) {
+            setTimeout(() => {
+                updateScores(true)
+                clearResult()
+            }, 0)
+            gameIsDone = false
+        }
         playRound(element.textContent, getComputerChoice())
     }
 })
@@ -79,11 +87,8 @@ function playRound(humanChoice, computerChoice) {
     updateScores()
 
     if (humanScore === 5 || computerScore === 5) {
-        setTimeout(() => {
-            announceWinner(humanScore, computerScore)
-            clearResult()
-            updateScores(true)
-        }, 0)
+        announceWinner(humanScore, computerScore)
+        gameIsDone = true
     }
 }
 
