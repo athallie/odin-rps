@@ -1,9 +1,9 @@
 let humanScore = 0
 let computerScore = 0
-let rounds = 0
 
 let buttonsContainer = document.querySelector("#buttons-container")
 let resultsContainer = document.querySelector("#results-container")
+let scoresText = document.querySelectorAll(".score")
 
 buttonsContainer.addEventListener("click", (e) => {
     let element = e.target
@@ -27,7 +27,6 @@ function getComputerChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-
     let humanChoiceLC = humanChoice.toLowerCase()
 
     switch(humanChoiceLC) {
@@ -77,11 +76,14 @@ function playRound(humanChoice, computerChoice) {
             }
     }
 
-    if (rounds === 5) {
-        rounds = 0
-        announceWinner(humanScore, computerScore)
-    } else {
-        rounds++
+    updateScores()
+
+    if (humanScore === 5 || computerScore === 5) {
+        setTimeout(() => {
+            announceWinner(humanScore, computerScore)
+            clearResult()
+            updateScores(true)
+        }, 0)
     }
 }
 
@@ -95,9 +97,23 @@ function showResult(option, computerChoice, humanChoice) {
 }
 
 function announceWinner(humanScore, computerScore) {
-    console.log(
+    alert(
         (humanScore > computerScore) ? "You win the game!" 
         : (computerScore > humanScore) ? "You lose the game!"
         : "Nobody wins. It's a draw."
     )
+}
+
+function clearResult() {
+    resultsContainer.replaceChildren()
+}
+
+function updateScores(reset = false) {
+    if (reset) {
+        scoresText[0].textContent = 0
+        scoresText[1].textContent = 0
+    } else {
+        scoresText[0].textContent = computerScore
+        scoresText[1].textContent = humanScore
+    }
 }
