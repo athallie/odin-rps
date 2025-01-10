@@ -76,10 +76,6 @@ function playGame() {
         }
     }
 
-    for (let i = 0; i < 5; i++) {
-        playRound(getHumanChoice(), getComputerChoice())
-    }
-
     console.log(
         (humanScore > computerScore) ? "You win the game!" 
         : (computerScore > humanScore) ? "You lose the game!"
