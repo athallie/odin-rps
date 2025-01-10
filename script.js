@@ -2,6 +2,16 @@ let humanScore = 0
 let computerScore = 0
 let rounds = 0
 
+let buttonsContainer = document.querySelector("#buttons-container")
+let resultsContainer = document.querySelector("#results-container")
+
+buttonsContainer.addEventListener("click", (e) => {
+    let element = e.target
+    if (element.classList.contains('choice')) {
+        playRound(element.textContent, getComputerChoice())
+    }
+})
+
 function getComputerChoice() {
     let randomVal = Math.floor(Math.random() * 3)
     switch(randomVal) {
@@ -14,10 +24,6 @@ function getComputerChoice() {
         default:
             return;
     }
-}
-
-function getHumanChoice() {
-    return prompt("Rock/Paper/Scissors?")
 }
 
 function playRound(humanChoice, computerChoice) {
@@ -80,11 +86,12 @@ function playRound(humanChoice, computerChoice) {
 }
 
 function showResult(option, computerChoice, humanChoice) {
-    console.log(
+    let resultText = document.createElement("p")
+    resultText.textContent = 
         option === 'draw' ? `Draw, ${computerChoice} doesn't beat ${humanChoice}` :
         option === 'win' ? `You win, ${humanChoice} beats ${computerChoice}` :
         `You lose, ${computerChoice} beats ${humanChoice}`
-    )
+    resultsContainer.appendChild(resultText)
 }
 
 function announceWinner(humanScore, computerScore) {
